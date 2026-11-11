@@ -1,0 +1,25 @@
+
+{
+  "id": "/wunaforum-info/",
+  "name": "WUNA FORUM",
+  "short_name": "WUNA FORUM",
+  "description": "Informasi, Inspirasi, Aspirasi Masyarakat Muna",
+  "start_url": "/wunaforum-info/",
+  "scope": "/wunaforum-info/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f5f8",
+  "theme_color": "#14243b",
+  "icons": [
+    {
+      "src": "https://www.google.com/s2/favicons?domain=wunaforum.blogspot.com&sz=192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://www.google.com/s2/favicons?domain=wunaforum.blogspot.com&sz=512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
