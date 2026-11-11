@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#14243b">
+<title>WUNA FORUM - Berita Muna</title>
+<style>
+:root {
+  --navy:#14243b;
+  --blue:#203b5c;
+  --gold:#e5ae52;
+  --bg:#f3f5f8;
+  --text:#202b3a;
+  --muted:#778292;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  background:var(--navy);
+  color:white;
+  padding:17px 18px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 10px #0002;
+}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:43px;height:43px;
+  border:2px solid var(--gold);
+  border-radius:10px;
+  display:grid;place-items:center;
+  color:var(--gold);
+  font-weight:bold;font-size:19px;
+}
+.brand h1{margin:0;font-size:21px;letter-spacing:1px}
+.brand small{color:#cbd5e1;font-size:10px;letter-spacing:1px}
+nav{
+  display:flex;gap:9px;overflow-x:auto;
+  padding:13px 15px;background:white;
+  scrollbar-width:none;
+}
+nav button{
+  border:1px solid #e1e5eb;
+  border-radius:20px;padding:8px 14px;
+  background:white;white-space:nowrap;
+  color:#455267;font-size:12px;
+}
+nav button.active{background:var(--navy);color:white}
+.container{max-width:850px;margin:auto;padding:17px}
+.section-title{
+  font-size:18px;font-weight:bold;
+  margin:22px 0 13px;
+}
+.search{
+  width:100%;padding:13px 15px;
+  border:1px solid #dce1e8;border-radius:10px;
+  font-size:14px;outline:none;background:white;
+}
+.hero{
+  background:var(--navy);color:white;
+  border-radius:14px;overflow:hidden;
+  margin-top:17px;
+}
+.hero img{width:100%;height:220px;object-fit:cover;display:block}
+.hero-content{padding:17px}
+.tag{
+  color:var(--gold);font-size:10px;
+  font-weight:bold;text-transform:uppercase;
+}
+.hero h2{font-size:21px;line-height:1.35;margin:9px 0}
+.meta{font-size:11px;color:var(--muted);margin-top:8px}
+.hero .meta{color:#cbd5e1}
+.card{
+  background:white;border-radius:12px;
+  overflow:hidden;margin-bottom:13px;
+  display:flex;gap:12px;padding:10px;
+  box-shadow:0 2px 8px #172b460b;
+}
+.card img{
+  width:112px;height:105px;object-fit:cover;
+  border-radius:8px;flex-shrink:0;
+  background:#e7ebf0;
+}
+.card-content{min-width:0;flex:1}
+.card h3{font-size:14px;line-height:1.4;margin:5px 0}
+.excerpt{
+  font-size:11px;color:#687386;
+  line-height:1.5;margin-top:5px;
+}
+button{cursor:pointer}
+.read{
+  border:0;background:none;padding:0;
+  text-align:left;color:inherit;width:100%;
+}
+.loading,.empty{
+  padding:30px 15px;text-align:center;
+  color:var(--muted);font-size:13px;
+}
+footer{
+  background:var(--navy);color:white;
+  text-align:center;padding:25px 15px;
+  margin-top:35px;font-size:12px;
+}
+footer strong{color:var(--gold)}
+#reader{
+  display:none;background:white;
+  min-height:70vh;padding:20px;
+  max-width:850px;margin:auto;
+}
+.back{
+  border:0;background:#edf1f6;color:var(--navy);
+  border-radius:8px;padding:10px 15px;
+  margin-bottom:18px;
+}
+#reader h1{font-size:25px;line-height:1.35}
+#reader .article-body{
+  font-size:16px;line-height:1.8;
+  overflow-wrap:anywhere;
+}
+.article-body img{max-width:100%;height:auto!important}
+.article-body iframe{max-width:100%}
+.article-body a{color:#1765a5}
+.share{
+  border:0;background:var(--navy);
+  color:white;padding:12px 18px;
+  border-radius:8px;margin:15px 0;
+}
+@media(min-width:600px){
+ .card img{width:155px;height:115px}
+ .hero img{height:330px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="brand">
+  <div class="logo">WF</div>
+  <div>
+   <h1>WUNA FORUM</h1>
+   <small>INFORMASI • INSPIRASI • ASPIRASI</small>
+  </div>
+ </div>
+</header>
+
+<div id="main">
+<nav id="categories">
+ <button class="active" data-category="Semua">Semua</button>
+</nav>
+
+<main class="container">
+ <input id="search" class="search"
+ placeholder="Cari berita WUNA FORUM...">
+
+ <div id="hero-area"></div>
+
+ <div class="section-title" id="list-title">
+  Berita Terbaru
+ </div>
+
+ <div id="news-list" class="loading">
+  Menghubungkan ke WUNA FORUM...
+ </div>
+</main>
+</div>
+
+<section id="reader">
+ <button class="back" onclick="closeArticle()">← Kembali ke Berita</button>
+ <div id="article-content"></div>
+</section>
+
+<footer>
+ <strong>WUNA FORUM</strong>
+ <p>Menyuguhkan Realitas, Mengungkap Fakta</p>
+ <small>© 2026 WUNA FORUM. Semua hak dilindungi.</small>
+</footer>
+
+<script>
+const FEED =
+"https://wunaforum.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=30&callback=wfFeed";
+
+let posts=[];
+let currentCategory="Semua";
+
+function cleanHTML(html){
+ const box=document.createElement("div");
+ box.innerHTML=html||"";
+ box.querySelectorAll("script,style,iframe,object").forEach(e=>e.remove());
+ return box;
+}
+
+function plainText(html){
+ return cleanHTML(html).textContent
+  .replace(/\s+/g," ").trim();
+}
+
+function getImage(post){
+ if(post.media$thumbnail){
+  return post.media$thumbnail.url.replace(/\/s72-c\//,"/s600/");
+ }
+ const box=cleanHTML(post.content?.$t||post.summary?.$t||"");
+ const img=box.querySelector("img");
+ return img ? img.src : "";
+}
+
+function getDate(post){
+ const d=new Date(post.published.$t);
+ return d.toLocaleDateString("id-ID",{
+  day:"numeric",month:"long",year:"numeric"
+ });
+}
+
+function getLink(post){
+ const links=post.link||[];
+ const item=links.find(x=>x.rel==="alternate");
+ return item ? item.href : "#";
+}
+
+function renderCategories(){
+ const labels=new Set();
+ posts.forEach(p=>{
+  (p.category||[]).forEach(c=>labels.add(c.term));
+ });
+ const nav=document.getElementById("categories");
+ nav.innerHTML="";
+ ["Semua",...labels].forEach(cat=>{
+  const b=document.createElement("button");
+  b.textContent=cat;
+  if(cat===currentCategory)b.className="active";
+  b.onclick=()=>{
+   currentCategory=cat;
+   renderCategories();
+   renderNews();
+  };
+  nav.appendChild(b);
+ });
+}
+
+function renderNews(){
+ const query=document.getElementById("search").value.toLowerCase();
+ const filtered=posts.filter(p=>{
+  const title=p.title.$t.toLowerCase();
+  const body=plainText(p.content?.$t||"").toLowerCase();
+  const labels=(p.category||[]).map(c=>c.term);
+  const matchCategory=currentCategory==="Semua"||
+   labels.includes(currentCategory);
+  return matchCategory && (title.includes(query)||body.includes(query));
+ });
+
+ const hero=document.getElementById("hero-area");
+ const list=document.getElementById("news-list");
+
+ if(!filtered.length){
+  hero.innerHTML="";
+  list.innerHTML='<div class="empty">Berita tidak ditemukan.</div>';
+  return;
+ }
+
+ if(currentCategory==="Semua"&&!query){
+  const p=filtered[0];
+  const img=getImage(p);
+  hero.innerHTML=`
+   <div class="hero">
+    ${img?`<img src="${img}" alt="Foto berita">`:""}
+    <div class="hero-content">
+     <span class="tag">BERITA UTAMA</span>
+     <button class="read" onclick="openArticle('${getLink(p)}')">
+      <h2>${escapeHTML(p.title.$t)}</h2>
+     </button>
+     <div class="meta">${getDate(p)} • WUNA FORUM</div>
+    </div>
+   </div>`;
+  filtered.shift();
+ }else{
+  hero.innerHTML="";
+ }
+
+ list.innerHTML=filtered.map(p=>{
+  const img=getImage(p);
+  const category=p.category?.[0]?.term||"Berita";
+  const excerpt=plainText(p.content?.$t||"").slice(0,115);
+  return `
+   <div class="card">
+    ${img?`<img src="${img}" loading="lazy" alt="">`:""}
+    <div class="card-content">
+     <span class="tag">${escapeHTML(category)}</span>
+     <button class="read" onclick="openArticle('${getLink(p)}')">
+      <h3>${escapeHTML(p.title.$t)}</h3>
+     </button>
+     <div class="excerpt">${escapeHTML(excerpt)}...</div>
+     <div class="meta">${getDate(p)}</div>
+    </div>
+   </div>`;
+ }).join("");
+}
+
+function escapeHTML(str){
+ return String(str||"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",
+  '"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function openArticle(url){
+ const p=posts.find(x=>getLink(x)===url);
+ if(!p)return;
+ const content=document.getElementById("article-content");
+ content.innerHTML=`
+  <span class="tag">WUNA FORUM</span>
+  <h1>${escapeHTML(p.title.$t)}</h1>
+  <div class="meta">${getDate(p)}</div>
+  <button class="share" onclick="shareArticle('${url.replace(/'/g,"%27")}')">
+   ↗ Bagikan Berita
+  </button>
+  <div class="article-body">${cleanHTML(p.content?.$t||p.summary?.$t||"").innerHTML}</div>
+  <p class="meta">Sumber: WUNA FORUM</p>
+  <p><a href="${url}" target="_blank" rel="noopener">Buka artikel asli di website →</a></p>
+ `;
+ document.getElementById("main").style.display="none";
+ document.getElementById("reader").style.display="block";
+ window.scrollTo(0,0);
+ history.pushState({article:true},"","#artikel");
+}
+
+function closeArticle(){
+ document.getElementById("reader").style.display="none";
+ document.getElementById("main").style.display="block";
+ window.scrollTo(0,0);
+}
+
+function shareArticle(url){
+ const p=posts.find(x=>getLink(x)===url);
+ const data={
+  title:p?.title.$t||"WUNA FORUM",
+  text:p?.title.$t||"Berita WUNA FORUM",
+  url:url
+ };
+ if(navigator.share){
+  navigator.share(data).catch(()=>{});
+ }else{
+  navigator.clipboard.writeText(url)
+   .then(()=>alert("Link berita berhasil disalin."));
+ }
+}
+
+function wfFeed(data){
+ posts=data.feed.entry||[];
+ renderCategories();
+ renderNews();
+}
+
+document.getElementById("search").addEventListener("input",renderNews);
+
+const script=document.createElement("script");
+script.src=FEED;
+script.onerror=()=>{
+ document.getElementById("news-list").innerHTML=
+ '<div class="empty">Gagal memuat berita. Periksa koneksi internet dan pengaturan Blogger.</div>';
+};
+document.body.appendChild(script);
+
+window.addEventListener("popstate",()=>{
+ closeArticle();
+});
+</script>
+</body>
+</html>
