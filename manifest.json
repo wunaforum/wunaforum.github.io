@@ -1,9 +1,8 @@
-
 {
   "id": "/",
-  "name": "WUNA FORUM",
-  "short_name": "WUNA FORUM",
-  "description": "Informasi, Inspirasi, Aspirasi Masyarakat Muna",
+  "name": "WF App",
+  "short_name": "WF App",
+  "description": "Aplikasi berita WUNA FORUM",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -12,14 +11,16 @@
   "theme_color": "#14243b",
   "icons": [
     {
-      "src": "https://www.google.com/s2/favicons?domain=wunaforum.blogspot.com&sz=192",
+      "src": "/wf-app-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "https://www.google.com/s2/favicons?domain=wunaforum.blogspot.com&sz=512",
+      "src": "/wf-app-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
