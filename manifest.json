@@ -1,11 +1,11 @@
 
 {
-  "id": "/wunaforum-info/",
+  "id": "/",
   "name": "WUNA FORUM",
   "short_name": "WUNA FORUM",
   "description": "Informasi, Inspirasi, Aspirasi Masyarakat Muna",
-  "start_url": "/wunaforum-info/",
-  "scope": "/wunaforum-info/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f3f5f8",
