@@ -1,10 +1,10 @@
 
-const CACHE_NAME = "wuna-forum-v1";
+const CACHE_NAME = "wuna-forum-v2";
 
 const APP_FILES = [
-  "/wunaforum-info/",
-  "/wunaforum-info/index.html",
-  "/wunaforum-info/manifest.json"
+  "/",
+  "/index.html",
+  "/manifest.json"
 ];
 
 self.addEventListener("install", event => {
@@ -30,11 +30,9 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   const request = event.request;
-
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
@@ -48,7 +46,7 @@ self.addEventListener("fetch", event => {
       return response;
     }).catch(() =>
       caches.match(request).then(cached =>
-        cached || caches.match("/wunaforum-info/index.html")
+        cached || caches.match("/index.html")
       )
     )
   );
