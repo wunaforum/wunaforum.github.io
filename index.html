@@ -342,24 +342,31 @@ function closeArticle(){
 }
 
 function shareArticle(url){
- const p=posts.find(x=>getLink(x)===url);
- const data={
-  title:p?.title.$t||"WUNA FORUM",
-  text:p?.title.$t||"Berita WUNA FORUM",
-  url:url
- };
- if(navigator.share){
-  navigator.share(data).catch(()=>{});
- }else{
-  navigator.clipboard.writeText(url)
-   .then(()=>alert("Link berita berhasil disalin."));
- }
+  const p=posts.find(x=>getLink(x)===url);
+  const shareUrl=location.origin+"/?artikel="+encodeURIComponent(url);
+  const data={
+    title:p?.title.$t||"WUNA FORUM",
+    text:p?.title.$t||"Berita WUNA FORUM",
+    url:shareUrl
+  };
+  if(navigator.share){
+    navigator.share(data).catch(()=>{});
+  }else{
+    navigator.clipboard.writeText(shareUrl)
+    .then(()=>alert("Link berita berhasil disalin."));
+  }
 }
 
 function wfFeed(data){
- posts=data.feed.entry||[];
- renderCategories();
- renderNews();
+  posts=data.feed.entry||[];
+  renderCategories();
+  renderNews();
+
+  const sharedArticle = new URLSearchParams(window.location.search).get("artikel");
+
+  if(sharedArticle && posts.some(p=>getLink(p)===sharedArticle)){
+    openArticle(sharedArticle);
+  }
 }
 
 document.getElementById("search").addEventListener("input",renderNews);
