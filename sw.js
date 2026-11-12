@@ -1,10 +1,12 @@
 
-const CACHE_NAME = "wuna-forum-v2";
+const CACHE_NAME = "wuna-forum-v3";
 
 const APP_FILES = [
   "/",
   "/index.html",
-  "/manifest.json"
+  "/manifest.json",
+  "/wf-app-192.png",
+  "/wf-app-512.png"
 ];
 
 self.addEventListener("install", event => {
