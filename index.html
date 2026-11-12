@@ -327,7 +327,11 @@ function openArticle(url){
   </button>
   <div class="article-body">${cleanHTML(p.content?.$t||p.summary?.$t||"").innerHTML}</div>
   <p class="meta">Sumber: WUNA FORUM</p>
-  <p><a href="${url}" target="_blank" rel="noopener">Buka artikel asli di website →</a></p>
+  <div style="text-align:center; margin:25px 0;">
+  <button onclick="installWFApp()" style="background:#14243b;color:white;padding:14px 28px;border:0;border-radius:10px;font-weight:bold;font-size:16px;">
+    ⬇ INSTAL WF APP
+  </button>
+</div>
  `;
  document.getElementById("main").style.display="none";
  document.getElementById("reader").style.display="block";
@@ -382,6 +386,27 @@ document.body.appendChild(script);
 window.addEventListener("popstate",()=>{
  closeArticle();
 });
+  let deferredInstallPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+});
+
+async function installWFApp() {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+  } else if (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    navigator.standalone
+  ) {
+    alert("WF App sudah terpasang.");
+  } else {
+    alert("Untuk memasang WF App, buka menu Chrome (⋮), lalu pilih Instal aplikasi.");
+  }
+}
 </script>
   <script>
 if ("serviceWorker" in navigator) {
